@@ -76,7 +76,12 @@ class Registry:
         resolved = Path(path).resolve()
         if not resolved.is_dir():
             raise ValueError(f"Path is not a directory: {resolved}")
-        if not (resolved / ".git").exists() and not (resolved / ".svn").exists() and not (resolved / ".code-review-graph").exists():
+        has_repo_marker = (
+            (resolved / ".git").exists()
+            or (resolved / ".svn").exists()
+            or (resolved / ".code-review-graph").exists()
+        )
+        if not has_repo_marker:
             raise ValueError(
                 f"Path does not look like a repository "
                 f"(no .git, .svn, or .code-review-graph): {resolved}"

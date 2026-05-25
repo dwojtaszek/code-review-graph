@@ -43,10 +43,6 @@ import os
 from importlib.metadata import PackageNotFoundError
 from importlib.metadata import version as pkg_version
 from pathlib import Path
-from typing import TYPE_CHECKING
-
-if TYPE_CHECKING:
-    from .graph import GraphStore
 
 logger = logging.getLogger(__name__)
 
@@ -1046,12 +1042,12 @@ def main() -> None:
             print(f"Output: {wiki_dir}")
 
         elif args.command == "detect-changes":
+            from .changes import analyze_changes
             from .context_savings import (
                 attach_context_savings,
                 estimate_file_tokens,
                 format_context_savings,
             )
-            from .changes import analyze_changes
             from .incremental import get_changed_files, get_staged_and_unstaged
 
             base = args.base
